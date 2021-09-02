@@ -1,0 +1,26 @@
+import cv2
+import numpy as np
+import face_recognition
+import os
+
+img = cv2.imread('FaceCollection/Zhang.jpg')
+imgTest = cv2.imread('FaceTest/237724400_370526887788499_3723858661921685391_n.jpg')
+faceLoc = face_recognition.face_locations(img)[0]
+faceEncode = face_recognition.face_encodings(img)[0]
+cv2.rectangle(img, (faceLoc[3], faceLoc[0]), (faceLoc[1], faceLoc[2]), (255, 0, 255), 2)
+
+faceLocTest = face_recognition.face_locations(imgTest)[0]
+faceEncodeTest = face_recognition.face_encodings(imgTest)[0]
+cv2.rectangle(imgTest, (faceLocTest[3], faceLocTest[0]), (faceLocTest[1], faceLocTest[2]), (255, 0, 255), 2)
+
+faceDis = face_recognition.face_distance([faceEncode], faceEncodeTest)
+faceCompare = face_recognition.compare_faces([faceEncode], faceEncodeTest)
+
+print(faceDis, ' ', faceCompare)
+
+cv2.imshow('img', img)
+cv2.imshow('imgtest', imgTest)
+cv2.waitKey(0)
+
+# faceLoc = face_recognition.face_locations(img)[0]
+# faceEncode = face_recognition.face_encodings(img)
